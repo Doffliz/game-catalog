@@ -4,7 +4,12 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./App.css";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+// Точка входу клієнтського застосунку
+const root = ReactDOM.createRoot(
+  document.getElementById("root")
+);
+
+// Рендер головного компонента з підтримкою маршрутизації
 root.render(
   <BrowserRouter>
     <App />

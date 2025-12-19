@@ -2,12 +2,14 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 
+// Базовий стиль для навігаційних посилань
 const linkStyle = {
   textDecoration: "none",
   color: "#fff",
   fontWeight: 500,
 };
 
+// Стиль активного пункту меню
 const activeLinkStyle = {
   ...linkStyle,
   borderBottom: "2px solid #61dafb",
@@ -16,6 +18,7 @@ const activeLinkStyle = {
 export default function Header({ onSearch }) {
   const location = useLocation();
 
+  // Перевірка активного маршруту
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -32,10 +35,10 @@ export default function Header({ onSearch }) {
         zIndex: 100,
       }}
     >
-      {/* Ліва частина */}
+      {/* Ліва частина: логотип і навігація */}
       <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
         <Link to="/" style={{ ...linkStyle, fontSize: 18 }}>
-          🎮 <b>GameStore</b>
+          <b>GameStore</b>
         </Link>
 
         <nav style={{ display: "flex", gap: 16 }}>
@@ -45,7 +48,6 @@ export default function Header({ onSearch }) {
           >
             Головна
           </Link>
-
           <Link
             to="/favorites"
             style={isActive("/favorites") ? activeLinkStyle : linkStyle}
@@ -55,7 +57,7 @@ export default function Header({ onSearch }) {
         </nav>
       </div>
 
-      {/* Права частина */}
+      {/* Права частина: пошук */}
       <div style={{ minWidth: 260 }}>
         <SearchBar onSearch={onSearch} />
       </div>

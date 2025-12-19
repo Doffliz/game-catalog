@@ -9,7 +9,7 @@ body {
 
 .app { min-height: 100vh; }
 
-/* ===== HEADER ===== */
+
 .header {
   position: sticky;
   top: 0;
@@ -39,7 +39,7 @@ body {
   color: #fff;
 }
 
-/* ===== NAV ===== */
+
 .nav {
   display: flex;
   gap: 18px;
@@ -65,7 +65,7 @@ body {
   border-bottom: 2px solid #facc15;
 }
 
-/* ===== SEARCH ===== */
+
 .search-input {
   width: 220px;
   padding: 8px 12px;
@@ -82,7 +82,7 @@ body {
 }
 
 
-/* GRID */
+
 .games-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -90,7 +90,7 @@ body {
   padding: 32px;
 }
 
-/* CARD */
+
 .game-card {
   background-color: #1a1a1a;
   border-radius: 12px;
@@ -124,7 +124,7 @@ body {
   color: #aaa;
 }
 
-/* ===== Details page ===== */
+
 .page.details-page {
   padding: 16px;
 }
@@ -167,8 +167,8 @@ body {
 
 .details-heroImg {
   width: 100%;
-  height: 320px;          /* ОЦЕ фіксить “величезну картинку” */
-  object-fit: cover;      /* НЕ розтягує, а красиво обрізає */
+  height: 320px;          
+  object-fit: cover;      
   display: block;
 }
 
@@ -265,7 +265,7 @@ body {
   opacity: 0.8;
 }
 
-/* ===== Screenshots grid ===== */
+
 .shots-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -282,12 +282,12 @@ body {
 
 .shot-img {
   width: 100%;
-  height: 170px;       /* фікс — щоб не були “полотна” */
+  height: 170px;       
   object-fit: cover;
   display: block;
 }
 
-/* ===== Responsive ===== */
+
 @media (max-width: 980px) {
   .details-hero {
     grid-template-columns: 1fr;
@@ -413,12 +413,12 @@ body {
 }
 
 
-/* Щоб браузер малював системні контролі в темній темі */
+
 :root {
   color-scheme: dark;
 }
 
-/* select — нормальний вигляд */
+
 .genre-select {
   height: 36px;
   min-width: 180px;
@@ -429,12 +429,12 @@ body {
   padding: 0 38px 0 12px;
   outline: none;
   cursor: pointer;
-  appearance: none;        /* прибирає дефолтну стрілку */
+  appearance: none;        
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
-/* стрілка (своя) */
+
 .header-right {
   position: relative;
 }
@@ -447,22 +447,19 @@ body {
   background-repeat: no-repeat;
 }
 
-/* коли відкриваєш — хоча б фон/текст ок */
+
 .genre-select option {
   background: #111;
   color: #fff;
 }
 
-/* фокус */
+
 .genre-select:focus {
   border-color: rgba(255,255,255,0.28);
   box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
 }
 
-/* =========================
-   RESPONSIVE + HEADER FIX
-   (під твої класи)
-   ========================= */
+
 
 * { box-sizing: border-box; }
 img { max-width: 100%; height: auto; display: block; }
@@ -470,7 +467,7 @@ img { max-width: 100%; height: auto; display: block; }
 .page { width: 100%; }
 .details-page { width: 100%; }
 
-/* ---------- HEADER ---------- */
+
 .header{
   position: sticky;
   top: 0;
@@ -499,7 +496,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .logo-img{
-  height: 28px;        /* під твій PlayCore */
+  height: 28px;       
   width: auto;
   object-fit: contain;
 }
@@ -530,7 +527,7 @@ img { max-width: 100%; height: auto; display: block; }
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
 }
 
-/* правий блок: селект + пошук */
+
 .header-right{
   display: flex;
   align-items: center;
@@ -538,7 +535,7 @@ img { max-width: 100%; height: auto; display: block; }
   min-width: 0;
 }
 
-/* Селект (щоб НЕ білий текст/жахливе поле) */
+
 .genre-select{
   height: 38px;
   padding: 0 12px;
@@ -554,13 +551,13 @@ img { max-width: 100%; height: auto; display: block; }
   box-shadow: 0 0 0 3px rgba(255,255,255,.06);
 }
 
-/* Важливо: випадаючий список в Windows */
+
 .genre-select option{
   background: #0f0f0f;
   color: #fff;
 }
 
-/* Пошук */
+
 .search-input{
   height: 38px;
   width: 280px;
@@ -582,7 +579,7 @@ img { max-width: 100%; height: auto; display: block; }
   box-shadow: 0 0 0 3px rgba(255,255,255,.06);
 }
 
-/* ---------- DETAILS PAGE (адаптив) ---------- */
+
 .details-wrap{
   max-width: 1200px;
   margin: 0 auto;
@@ -606,7 +603,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 .details-heroImg{
   width: 100%;
-  height: 260px;     /* щоб не було “на весь екран” */
+  height: 260px;     
   object-fit: cover;
 }
 
@@ -625,7 +622,7 @@ img { max-width: 100%; height: auto; display: block; }
   gap: 10px;
 }
 
-/* скріншоти */
+
 .shots-grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -645,16 +642,16 @@ img { max-width: 100%; height: auto; display: block; }
   object-fit: cover;
 }
 
-/* ---------- BREAKPOINTS ---------- */
 
-/* <= 1024px */
+
+
 @media (max-width: 1024px){
   .details-hero{ grid-template-columns: 360px 1fr; }
   .shots-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .search-input{ width: 240px; }
 }
 
-/* <= 768px (телефон/планшет) */
+
 @media (max-width: 768px){
   .header{
     flex-direction: column;
@@ -705,8 +702,42 @@ img { max-width: 100%; height: auto; display: block; }
   }
 }
 
-/* <= 480px */
+
 @media (max-width: 480px){
   .logo-img{ height: 24px; }
   .nav-link{ padding: 7px 9px; font-size: 13px; }
+}
+
+
+
+.details-page { padding: 24px 16px; }
+.details-container { max-width: 1100px; margin: 0 auto; }
+
+.details-card {
+  background: #121212;
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.details-header {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.details-cover { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; }
+.details-coverPlaceholder { height: 220px; border-radius: 10px; display: grid; place-items: center; background: #1a1a1a; }
+
+.shots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.shot-img { width: 100%; height: 140px; object-fit: cover; display: block; }
+
+@media (max-width: 900px) {
+  .details-header { grid-template-columns: 1fr; }
+  .shots-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .shots-grid { grid-template-columns: 1fr; }
+  .shot-img { height: 180px; }
 }

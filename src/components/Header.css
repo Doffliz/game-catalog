@@ -13,21 +13,21 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* ===== LEFT ===== */
+
 .header-left {
   display: flex;
   align-items: center;
   gap: 24px;
 }
 
-/* LOGO */
+
 .logo img {
   height: 32px;
   width: auto;
   display: block;
 }
 
-/* NAV */
+
 .nav {
   display: flex;
   align-items: center;
@@ -62,14 +62,14 @@
   border-radius: 2px;
 }
 
-/* ===== RIGHT ===== */
+
 .header-right {
   margin-left: auto;
   display: flex;
   align-items: center;
 }
 
-/* SEARCH */
+
 .search-input {
   width: 240px;
   height: 36px;

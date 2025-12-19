@@ -1,18 +1,20 @@
 import axios from "axios";
 import LoggerService from "./LoggerService";
 
+// API ключ з .env (REACT_APP_RAWG_API_KEY)
 const apiKey = process.env.REACT_APP_RAWG_API_KEY;
 
-// через CRA proxy (setupProxy.js має проксити /rawg -> https://api.rawg.io)
 const client = axios.create({
   baseURL: "/rawg/api",
   timeout: 15000,
 });
 
+// Додає key=... до параметрів, якщо ключ існує
 function withKey(params = {}) {
   return apiKey ? { ...params, key: apiKey } : params;
 }
 
+// Отримання списку ігор (пошук + фільтр за жанром)
 export async function fetchGames(searchQuery = "", genreId = "") {
   try {
     LoggerService.info("Fetching games (RAWG)", { searchQuery, genreId });
@@ -22,7 +24,7 @@ export async function fetchGames(searchQuery = "", genreId = "") {
         page: 1,
         page_size: 24,
         ...(searchQuery ? { search: searchQuery } : {}),
-        ...(genreId ? { genres: genreId } : {}), // ✅ ФІЛЬТР ЖАНРУ
+        ...(genreId ? { genres: genreId } : {}),
       }),
     });
 
@@ -31,6 +33,7 @@ export async function fetchGames(searchQuery = "", genreId = "") {
 
     return results;
   } catch (error) {
+    // Логуємо помилку і пробросуємо далі (щоб UI показав помилку/стан)
     LoggerService.error("Failed to fetch games", {
       message: error?.message,
       status: error?.response?.status,
@@ -39,6 +42,7 @@ export async function fetchGames(searchQuery = "", genreId = "") {
   }
 }
 
+// Отримання списку жанрів
 export async function fetchGenres() {
   try {
     LoggerService.info("Fetching genres (RAWG)");
@@ -52,6 +56,7 @@ export async function fetchGenres() {
 
     return genres;
   } catch (error) {
+    // Тут повертаємо [], щоб UI міг продовжити роботу навіть без жанрів
     LoggerService.error("Failed to fetch genres", {
       message: error?.message,
       status: error?.response?.status,
@@ -60,6 +65,7 @@ export async function fetchGenres() {
   }
 }
 
+// Детальна інформація про гру
 export async function fetchGameDetails(id) {
   try {
     LoggerService.info("Fetching game details (RAWG)", { id });
@@ -84,6 +90,7 @@ export async function fetchGameDetails(id) {
   }
 }
 
+// Скріншоти гри
 export async function fetchGameScreenshots(id) {
   try {
     LoggerService.info("Fetching screenshots (RAWG)", { id });
@@ -97,6 +104,7 @@ export async function fetchGameScreenshots(id) {
 
     return shots;
   } catch (error) {
+    
     LoggerService.error("Failed to fetch screenshots", {
       id,
       message: error?.message,
