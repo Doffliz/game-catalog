@@ -1,46 +1,107 @@
-// src/services/api.js
 import axios from "axios";
-import Logger from "./LoggerService";
+import LoggerService from "./LoggerService";
 
-const apiKey = process.env.REACT_APP_RAWG_KEY;
+const apiKey = process.env.REACT_APP_RAWG_API_KEY;
 
+// через CRA proxy (setupProxy.js має проксити /rawg -> https://api.rawg.io)
 const client = axios.create({
-  baseURL: "https://api.rawg.io/api",
+  baseURL: "/rawg/api",
   timeout: 15000,
 });
 
 function withKey(params = {}) {
-  if (!apiKey) {
-    Logger.warn("RAWG key is missing. Add REACT_APP_RAWG_KEY to .env");
-  }
-  return { key: apiKey, ...params };
+  return apiKey ? { ...params, key: apiKey } : params;
 }
 
-export async function fetchGames({ search = "", page = 1, pageSize = 20 } = {}) {
+export async function fetchGames(searchQuery = "", genreId = "") {
   try {
-    const res = await client.get("/games", {
+    LoggerService.info("Fetching games (RAWG)", { searchQuery, genreId });
+
+    const response = await client.get("/games", {
       params: withKey({
-        search,
-        page,
-        page_size: pageSize,
-        ordering: "-rating",
+        page: 1,
+        page_size: 24,
+        ...(searchQuery ? { search: searchQuery } : {}),
+        ...(genreId ? { genres: genreId } : {}), // ✅ ФІЛЬТР ЖАНРУ
       }),
     });
-    return res.data;
-  } catch (err) {
-    Logger.error("fetchGames failed", { message: err?.message });
-    throw err;
+
+    const results = response?.data?.results ?? [];
+    LoggerService.info("Games fetched successfully", { count: results.length });
+
+    return results;
+  } catch (error) {
+    LoggerService.error("Failed to fetch games", {
+      message: error?.message,
+      status: error?.response?.status,
+    });
+    throw error;
   }
 }
 
-export async function fetchGameById(id) {
+export async function fetchGenres() {
   try {
-    const res = await client.get(`/games/${id}`, {
+    LoggerService.info("Fetching genres (RAWG)");
+
+    const response = await client.get("/genres", {
+      params: withKey({ page_size: 50 }),
+    });
+
+    const genres = response?.data?.results ?? [];
+    LoggerService.info("Genres fetched successfully", { count: genres.length });
+
+    return genres;
+  } catch (error) {
+    LoggerService.error("Failed to fetch genres", {
+      message: error?.message,
+      status: error?.response?.status,
+    });
+    return [];
+  }
+}
+
+export async function fetchGameDetails(id) {
+  try {
+    LoggerService.info("Fetching game details (RAWG)", { id });
+
+    const response = await client.get(`/games/${id}`, {
       params: withKey(),
     });
-    return res.data;
-  } catch (err) {
-    Logger.error("fetchGameById failed", { id, message: err?.message });
-    throw err;
+
+    LoggerService.info("Game details fetched successfully", {
+      id,
+      name: response?.data?.name,
+    });
+
+    return response.data;
+  } catch (error) {
+    LoggerService.error("Failed to fetch game details", {
+      id,
+      message: error?.message,
+      status: error?.response?.status,
+    });
+    throw error;
+  }
+}
+
+export async function fetchGameScreenshots(id) {
+  try {
+    LoggerService.info("Fetching screenshots (RAWG)", { id });
+
+    const response = await client.get(`/games/${id}/screenshots`, {
+      params: withKey({ page: 1, page_size: 12 }),
+    });
+
+    const shots = response?.data?.results ?? [];
+    LoggerService.info("Screenshots fetched successfully", { id, count: shots.length });
+
+    return shots;
+  } catch (error) {
+    LoggerService.error("Failed to fetch screenshots", {
+      id,
+      message: error?.message,
+      status: error?.response?.status,
+    });
+    return [];
   }
 }

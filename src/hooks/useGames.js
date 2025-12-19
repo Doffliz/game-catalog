@@ -1,38 +1,32 @@
-// src/hooks/useGames.js
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { fetchGames } from "../services/api";
-import Logger from "../services/LoggerService";
 
-export default function useGames() {
-  const [query, setQuery] = useState("");
+export default function useGames(searchQuery, genreId) {
   const [games, setGames] = useState([]);
-  const [status, setStatus] = useState("idle"); // idle|loading|success|error
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const load = useCallback(async (q) => {
-    setStatus("loading");
-    setError(null);
-    try {
-      const data = await fetchGames({ search: q });
-      setGames(data?.results ?? []);
-      setStatus("success");
-      Logger.info("Games loaded", { query: q, count: data?.results?.length ?? 0 });
-    } catch (e) {
-      setStatus("error");
-      setError(e);
-      Logger.error("Games load error", { query: q, message: e?.message });
-    }
-  }, []);
-
-  // первинне завантаження
   useEffect(() => {
-    load("");
-  }, [load]);
+    let mounted = true;
 
-  const onSearch = (q) => {
-    setQuery(q);
-    load(q);
-  };
+    (async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-  return { query, games, status, error, onSearch };
+        const data = await fetchGames(searchQuery, genreId);
+        if (mounted) setGames(data);
+      } catch (e) {
+        if (mounted) setError(e?.message || "Failed to load games");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, [searchQuery, genreId]);
+
+  return { games, loading, error };
 }
